@@ -4,18 +4,17 @@ class Solution:
     def countMajoritySubarrays(self, nums: List[int], target: int) -> int:
         n = len(nums)
 
+        size = 2 * n + 5
         offset = n + 2
-        bit = [0] * (2 * n + 5)
+        bit = [0] * size
 
-        ans = 0
         prefix = 0
+        ans = 0
 
-        idx = offset
-        while idx < len(bit):
-            bit[idx] += 1
-            idx += idx & -idx
-
-        m = len(bit)
+        i = offset
+        while i < size:
+            bit[i] += 1
+            i += i & -i
 
         for x in nums:
             prefix += 1 if x == target else -1
@@ -27,7 +26,7 @@ class Solution:
                 i -= i & -i
             ans += s
             i = idx
-            while i < m:
+            while i < size:
                 bit[i] += 1
                 i += i & -i
 
